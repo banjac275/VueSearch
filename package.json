@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0-rc.1",
+    "npm": "^6.4.1",
     "vue": "^2.5.17",
     "vuetify": "^1.2.0"
   },
@@ -19,7 +20,8 @@
     "node-sass": "^4.9.3",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-vuetify": "^0.2.1",
-    "vue-template-compiler": "^2.5.17"
+    "vue-template-compiler": "^2.5.17",
+    "vuex": "^3.0.1"
   },
   "eslintConfig": {
     "root": true,

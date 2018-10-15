@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-content class="mx-2" align-content-center>
-      <v-layout wrap justify-space-around>
+      <v-layout wrap row>
         <criteria/>
         <criteria/>
         <criteria/>
