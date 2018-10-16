@@ -1,5 +1,5 @@
 <template>
-  <v-flex xs12 sm3 class="px-1 mt-2">
+  <v-flex xs12 sm3 class="px-1 mt-2 criteria">
     <v-layout column>
       <v-select
         :items="getDimensions"
@@ -8,10 +8,16 @@
         label="Criteria"
         color="blue"
       ></v-select>
-      <display-element :element="displayElement" :selectSource="selSrc"/>
-      <v-layout row justify-center>
-        <v-btn class="btn" @click="toggleRed">include</v-btn>
-        <v-btn class="btn" @click="toggleRed">exclude</v-btn>
+      <display-element 
+      :element="displayElement" 
+      :selectSource="selSrc" 
+      @textFilled="textHandler($event)"
+      @selectedOption="selectedHandler($event)"
+      @sliderSet="sliderHandler($event)"
+      />
+      <v-layout v-if="selected" row justify-center class="btn-container">
+        <v-btn class="btn" :class="includeFlag ? ' btn--clicked' : ''" :disabled="includeFlag" @click="excludeFlag = includeFlag; includeFlag = !includeFlag">include</v-btn>
+        <v-btn class="btn" :class="excludeFlag ? ' btn--clicked' : ''" :disabled="excludeFlag" @click="includeFlag = excludeFlag; excludeFlag = !excludeFlag">exclude</v-btn>
       </v-layout>
     </v-layout>
   </v-flex>
@@ -27,13 +33,34 @@ export default {
   },
   data() {
     return {
-      selected: '',
+      selected: null,
       displayElement: '',
-      selSrc: []
+      selSrc: [],
+      changedState: false,
+      excludeFlag: false,
+      includeFlag: false,
+      textRecv: null,
+      slideRecv: null,
+      selectRecv: null,
+      retData: {}
     }
   },
   methods: {
-    toggleRed() {
+    textHandler(data) {
+      this.sendBackData(data)
+    },
+    selectedHandler(data) {
+      this.sendBackData(data)
+    },
+    sliderHandler(data) {
+      this.sendBackData(data)
+    },
+    sendBackData(data) {
+      this.retData = {}
+      this.retData.data = data
+      this.retData.selected = this.selected
+      this.retData.include = this.includeFlag;
+      this.$emit('responseData', this.retData)
     },
     alterDisplay(elem) {
       switch(elem) {
@@ -81,8 +108,9 @@ export default {
     })
   },
   watch: {
-    selected(val) {
+    selected() {
       this.alterDisplay(this.selected)
+      this.changedState = true
     }
   }
 }
@@ -96,8 +124,11 @@ export default {
 .btn {
   background: transparent !important;
   box-shadow: none !important;
-  &--clicked {
-    color: #ff0000;
+  &:hover {
+    background-color: transparent !important;
+  }
+  &--clicked:disabled {
+    color: #ff0000 !important;
   }
 }
 </style>
