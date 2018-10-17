@@ -40,16 +40,21 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Search by category'
+      title: 'Search by category',
+      searchCriteria: {}
     }
   },
   methods: {
     applied() {
-      let crit = document.querySelectorAll('.criteria')
-      console.log(crit)
+      let resDiv = document.getElementById('resDiv')
+      let keys = Object.getOwnPropertyNames(this.searchCriteria)
+      resDiv.innerHTML = ''
+      keys.forEach(key => {
+        if (key !== '__ob__') resDiv.innerHTML += `<div>${key}: data: ${this.searchCriteria[key].data} include: ${this.searchCriteria[key].include} selected: ${this.searchCriteria[key].selected}</div>`
+      })
     },
     handleRetData(data, field) {
-      console.log(data, field)
+      this.searchCriteria[field] = data
     }
   }
 }

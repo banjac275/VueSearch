@@ -16,6 +16,8 @@
     <v-slider 
     v-else-if="element === 'range'"
     v-model="sliderSet"
+    thumb-color="blue"
+    thumb-label
     color="blue"></v-slider>
     <div v-else class="inp"></div>
   </div>
